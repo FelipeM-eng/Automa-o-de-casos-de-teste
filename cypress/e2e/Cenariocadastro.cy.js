@@ -23,6 +23,12 @@ describe('Cenario 2: Cadastro', () => {
       .should('include', 'dashboard')
   })
 
+  afterEach(() => {
+
+    cy.wait(2000);
+
+  })
+
 
   //teste case 1
   it('Clicar no botão save sem preencher nenhum campo', () => {
@@ -109,6 +115,101 @@ describe('Cenario 2: Cadastro', () => {
     //E o sistema exibe uma mensagem de erro informando que o campo Confirm Password é obrigatório
     //E o usuário permanece na página de save sistem user
     cy.url().should('equal', 'https://opensource-demo.orangehrmlive.com/web/index.php/admin/saveSystemUser');
+
+  })
+
+  //teste case 4
+  it('Selecionar somente admin no campo User Role, preencher Employee Name, selecionar status e clicar em save', () => {
+    //Quando o usuário clica no menu Admin
+    cy.get('.oxd-main-menu-item--name').contains('Admin').click();
+
+    //E clica no botão Add
+    cy.contains('button', 'Add').click();
+
+    //E seleciona o campo User Role
+    cy.get('.oxd-select-text-input').eq(0).click();
+
+    //E seleciona a opção Admin
+    cy.contains('.oxd-select-option', 'Admin').click();
+
+    //E verifica se o campo User Role exibe a opção Admin selecionada
+    cy.get('.oxd-select-text-input')
+    .eq(0)
+    .should('contain.text', 'Admin');
+
+    //E preenche o campo Employee Name
+    cy.xpath("//input[@placeholder='Type for hints...']").type('a');
+    cy.wait(3000);
+    cy.xpath("//input[@placeholder='Type for hints...']").type('{downarrow}{enter}');
+
+    //E seleciona o campo Status
+    cy.get('.oxd-select-text-input').eq(1).click();
+
+    //E seleciona a opção Enabled
+    cy.contains('.oxd-select-option', 'Enabled').click();
+
+    //E verifica se o campo Status exibe a opção Enabled selecionada
+    cy.get('.oxd-select-text-input')
+    .eq(1)
+    .should('contain.text', 'Enabled');
+
+    //E clica no botão Save
+    cy.contains('button', 'Save').click();
+
+    //Então o sistema exibe uma mensagem de erro informando que o campo Username é obrigatório
+    //E o sistema exibe uma mensagem de erro informando que o campo Password é obrigatório
+    //E o sistema exibe uma mensagem de erro informando que o campo Confirm Password é obrigatório
+    //E o usuário permanece na página de save sistem user
+    cy.url().should('equal', 'https://opensource-demo.orangehrmlive.com/web/index.php/admin/saveSystemUser');
+
+  })
+
+  //teste case 5
+  it('Selecionar somente admin no campo User Role, preencher Employee Name, selecionar status, preencher username e clicar em save', () => {
+    //Quando o usuário clica no menu Admin
+    cy.get('.oxd-main-menu-item--name').contains('Admin').click();
+
+    //E clica no botão Add
+    cy.contains('button', 'Add').click();
+
+    //E seleciona o campo User Role
+    cy.get('.oxd-select-text-input').eq(0).click();
+
+    //E seleciona a opção Admin
+    cy.contains('.oxd-select-option', 'Admin').click();
+
+    //E verifica se o campo User Role exibe a opção Admin selecionada
+    cy.get('.oxd-select-text-input')
+    .eq(0)
+    .should('contain.text', 'Admin');
+
+    //E preenche o campo Employee Name
+    cy.xpath("//input[@placeholder='Type for hints...']").type('a');
+    cy.wait(3000);
+    cy.xpath("//input[@placeholder='Type for hints...']").type('{downarrow}{enter}');
+
+    //E seleciona o campo Status
+    cy.get('.oxd-select-text-input').eq(1).click();
+
+    //E seleciona a opção Enabled
+    cy.contains('.oxd-select-option', 'Enabled').click();
+
+    //E verifica se o campo Status exibe a opção Enabled selecionada
+    cy.get('.oxd-select-text-input')
+    .eq(1)
+    .should('contain.text', 'Enabled');
+
+    //E preenche o campo Username
+    cy.xpath("//*[@autocomplete='off']").eq(0).type('a');
+
+    //E clica no botão Save
+    cy.contains('button', 'Save').click();
+
+    //Então o sistema exibe uma mensagem de erro informando que o campo Password é obrigatório
+    //E o sistema exibe uma mensagem de erro informando que o campo Confirm Password é obrigatório
+    //E o usuário permanece na página de save sistem user
+    cy.url().should('equal', 'https://opensource-demo.orangehrmlive.com/web/index.php/admin/saveSystemUser');
+
 
   })
 
